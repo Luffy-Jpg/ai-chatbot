@@ -31,6 +31,15 @@ export function Chat({
 }) {
   const { mutate } = useSWRConfig();
 
+  // Adding initial greeting message for Jeff AI Chatbot
+  const initialGreetingMessage = {
+    role: 'assistant',
+    content: 'Hi! I\'m Jeff AI Chatbot. How can I assist you today?',
+  };
+
+  // Use the initial greeting message, and merge it with any other messages passed in
+  const updatedInitialMessages = [initialGreetingMessage, ...initialMessages];
+
   const {
     messages,
     setMessages,
@@ -44,7 +53,7 @@ export function Chat({
   } = useChat({
     id,
     body: { id, selectedChatModel: selectedChatModel },
-    initialMessages,
+    initialMessages: updatedInitialMessages,
     experimental_throttle: 100,
     sendExtraMessageFields: true,
     generateId: generateUUID,
